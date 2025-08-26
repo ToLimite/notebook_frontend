@@ -1,12 +1,12 @@
 <template>
     <el-container style="height: 600px; border: 1px solid #eee">
         <el-aside width="250px" style="background-color: rgb(238, 241, 246)">
-        <el-menu :default-openeds="1">
+        <el-menu>
             <p>笔记列表:</p>
             <el-menu-item
                 v-for="item in menuItems"
-                :key="1" @click="handleClick(item[1])">
-                {{ item[0] }}
+                @click="handleClick(item.index)" :key=item.id >
+                {{ item.text }}
             </el-menu-item>
         </el-menu>
   </el-aside>
@@ -17,17 +17,16 @@
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       <el-button>新增</el-button>&nbsp;&nbsp;&nbsp;
       <el-button>删除</el-button>&nbsp;&nbsp;&nbsp;
-      <el-button @click="qryData">查询</el-button>
     </el-header>
     
     <el-main>
         <el-input
-            v-model="menuItems[index][0]"
+            v-model="menuItems[index].text"
             type="textarea"
             :rows="20"
             placeholder="请输入内容">
         </el-input>
-        <el-button>保存</el-button>
+        <el-button @click="saveText">保存</el-button>
     </el-main>
   </el-container>
 </el-container>
@@ -64,12 +63,17 @@ export default {
         qryData: async function(){
             // userId = localStorage.getItem('userId');
             this.response = await http.get("/note/1");
-            // console.log(this.response.data);
             this.menuItems = this.response.data;
-            
         },
         handleClick: function(x){
             this.index = x;
+        },
+        saveText: async function(){
+            const pyload = {
+              id: this.menuItems[this.index].id,
+              text: this.menuItems[this.index].text
+            }
+            await http.post("/note/id");
         }
     },
     created(){
