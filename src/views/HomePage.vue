@@ -5,7 +5,8 @@
             <p>笔记列表:</p>
             <el-menu-item
                 v-for="item in menuItems"
-                :key="1">
+                :key="1" @click="handleClick(item[1])">
+                {{ item[0] }}
             </el-menu-item>
         </el-menu>
   </el-aside>
@@ -21,7 +22,7 @@
     
     <el-main>
         <el-input
-            v-model="menuItems[index]"
+            v-model="menuItems[index][0]"
             type="textarea"
             :rows="20"
             placeholder="请输入内容">
@@ -54,17 +55,21 @@ export default {
     data() {
         return{
             index: 0,
+            response: null,
             menuItems: [
             ],
         }
     },
     methods: {
-        qryData: function(){
+        qryData: async function(){
             // userId = localStorage.getItem('userId');
-            response = http.get("/note/1");
-            console.log(response.data);
-            // this.menuItems = response.data;
+            this.response = await http.get("/note/1");
+            // console.log(this.response.data);
+            this.menuItems = this.response.data;
             
+        },
+        handleClick: function(x){
+            this.index = x;
         }
     },
     created(){
