@@ -81,17 +81,18 @@ export default {
       try {
         // 调用真实的登录接口
         const result = await authService.login(this.username, this.password);
-        
+        // console.log(result.data.flag);
         if (result.success || result.code === 200) {  // 检查 success 或 code 字段
           // 登录成功
           console.log('登录成功:', result.msg || result.message || '登录成功');
-          
+          localStorage.setItem('userId', result.data.userId);
           // 验证token是否已保存
           const token = localStorage.getItem('auth_token');
-          if (token) {
+          if (token) { 
             // 显示登录成功消息，不跳转页面
             this.successMessage = result.msg || result.message || '登录成功！';
             this.errorMessage = ''; // 清除错误信息
+            this.$router.push('/homepage')
             // 清空表单
             this.username = '';
             this.password = '';
@@ -100,6 +101,7 @@ export default {
             this.errorMessage = '登录成功但认证信息保存失败';
           }
         } else {
+          // console.log("登录失败！")
           // 登录失败
           this.errorMessage = result.msg || result.message || '登录失败';
         }

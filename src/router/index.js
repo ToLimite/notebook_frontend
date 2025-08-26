@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Login from '../views/Login.vue'
+import HomePage from '@/views/HomePage.vue'
 
 
 Vue.use(VueRouter)
@@ -11,6 +12,11 @@ const routes = [
     name: 'Login',
     component: Login
   },
+  {
+    path: '/homepage',
+    name: 'Login',
+    component: HomePage
+  },
 ]
 
 const router = new VueRouter({
@@ -20,18 +26,18 @@ const router = new VueRouter({
 })
 
 // 路由守卫 - 检查登录状态
-router.beforeEach((to, from, next) => {
-  // 使用认证工具检查登录状态
-  const token = localStorage.getItem('auth_token')
-  const isAuthenticated = !!token
-  
-  if (to.meta.requiresAuth && !isAuthenticated) {
-    next('/')
-  } else if (to.path === '/' && isAuthenticated) {
-    next('/home')
-  } else {
-    next()
-  }
-})
+// router.beforeEach((to, from, next) => {
+//   // 使用认证工具检查登录状态
+//   const token = localStorage.getItem('auth_token')
+//   const isAuthenticated = !!token
+
+//   if (to.meta.requiresAuth && !isAuthenticated) {
+//     next('/')
+//   } else if (to.path === '/' && isAuthenticated) {
+//     next('/home')
+//   } else {
+//     next()
+//   }
+// })
 
 export default router 
