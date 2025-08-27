@@ -15,7 +15,7 @@
     <el-header style="text-align: left; font-size: 16px">
       <span>小小笔记本</span>
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      <el-button>新增</el-button>&nbsp;&nbsp;&nbsp;
+      <el-button @click="addNote">新增</el-button>&nbsp;&nbsp;&nbsp;
       <el-button>删除</el-button>&nbsp;&nbsp;&nbsp;
     </el-header>
     
@@ -57,6 +57,7 @@ export default {
             index: 0,
             response: null,
             saveRes: null,
+            addRes: null,
             menuItems: [
             ],
         }
@@ -77,10 +78,15 @@ export default {
               text: this.menuItems[this.index].text
             }
             this.saveRes = await http.post("/note/save", pyload);
+        },
+        addNote: async function(){
+            this.addRes = await http.get("/note/add/" + this.userId);
+            this.qryData();
         }
     },
     created(){
         this.qryData();
-    }
+        this.userId = localStorage.getItem('userId');
+    } 
 }
 </script>
