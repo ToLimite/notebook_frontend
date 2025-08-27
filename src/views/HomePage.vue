@@ -53,6 +53,7 @@ export default {
     name: 'HomePage',
     data() {
         return{
+            userId: 0, 
             index: 0,
             response: null,
             saveRes: null,
@@ -62,8 +63,9 @@ export default {
     },
     methods: {
         qryData: async function(){
-            // userId = localStorage.getItem('userId');
-            this.response = await http.get("/note/1");
+            this.userId = localStorage.getItem('userId');
+            console.log(this.userId);
+            this.response = await http.get("/note/"+this.userId);
             this.menuItems = this.response.data;
         },
         handleClick: function(x){

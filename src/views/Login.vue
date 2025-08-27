@@ -84,8 +84,9 @@ export default {
         // console.log(result.data.flag);
         if (result.success || result.code === 200) {  // 检查 success 或 code 字段
           // 登录成功
-          console.log('登录成功:', result.msg || result.message || '登录成功');
+          console.log('登录成功:1111', result.msg || result.message || '登录成功');
           localStorage.setItem('userId', result.data.userId);
+          console.log(localStorage.getItem('userId'));
           // 验证token是否已保存
           const token = localStorage.getItem('auth_token');
           if (token) { 
