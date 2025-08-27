@@ -16,7 +16,7 @@
       <span>小小笔记本</span>
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       <el-button @click="addNote">新增</el-button>&nbsp;&nbsp;&nbsp;
-      <el-button>删除</el-button>&nbsp;&nbsp;&nbsp;
+      <el-button @click="delNote">删除</el-button>&nbsp;&nbsp;&nbsp;
     </el-header>
     
     <el-main>
@@ -48,6 +48,7 @@
 
 <script>
 import { http } from '@/services';
+import { del } from 'vue';
 
 export default {
     name: 'HomePage',
@@ -58,6 +59,7 @@ export default {
             response: null,
             saveRes: null,
             addRes: null,
+            delRes: null,
             menuItems: [
             ],
         }
@@ -81,6 +83,11 @@ export default {
         },
         addNote: async function(){
             this.addRes = await http.get("/note/add/" + this.userId);
+            this.qryData();
+        },
+        delNote: async function(){
+            const delId = this.menuItems[this.index].id;
+            this.delRes = await http.delete("/note/del/" + delId);
             this.qryData();
         }
     },
