@@ -55,6 +55,7 @@ export default {
         return{
             index: 0,
             response: null,
+            saveRes: null,
             menuItems: [
             ],
         }
@@ -73,7 +74,7 @@ export default {
               id: this.menuItems[this.index].id,
               text: this.menuItems[this.index].text
             }
-            await http.post("/note/id");
+            this.saveRes = await http.post("/note/save", pyload);
         }
     },
     created(){
