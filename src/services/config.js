@@ -3,10 +3,10 @@ export const config = {
   // API配置
   api: {
     baseUrl: process.env.VUE_APP_API_URL || '/api',
-    timeout: 10000,
+    timeout: 100000,
     retryCount: 2
   },
-  
+
   // 认证相关配置
   auth: {
     tokenKey: 'auth_token',
@@ -22,7 +22,7 @@ export const config = {
       refresh: '/users/refresh-token'
     }
   },
-  
+
   // AI分析配置
   ai: {
     baseUrl: process.env.VUE_APP_AI_API_URL || '/api', // 使用代理路径
@@ -75,7 +75,7 @@ export const errorCodes = {
   TOKEN_INVALID: 'TOKEN_INVALID',
   RATE_LIMIT: 'RATE_LIMIT',
   SERVER_ERROR: 'SERVER_ERROR',
-  
+
   // AI错误码
   NO_CONTENT: 'NO_CONTENT',
   CONTENT_TOO_SHORT: 'CONTENT_TOO_SHORT',
@@ -97,13 +97,13 @@ export const dataStructures = {
     lastLoginAt: '',
     createdAt: ''
   },
-  
+
   // 登录请求数据结构
   loginRequest: {
     username: '',
     password: ''
   },
-  
+
   // 登录响应数据结构
   loginResponse: {
     code: 200,
@@ -113,7 +113,7 @@ export const dataStructures = {
       username: "",
     }
   },
-  
+
   // AI分析结果数据结构
   aiAnalysisResult: {
     analysis: {

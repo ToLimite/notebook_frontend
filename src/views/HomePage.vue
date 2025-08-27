@@ -1,5 +1,5 @@
 <template>
-    <el-container style="height: 600px; border: 1px solid #eee">
+    <el-container style="height: 800px; border: 1px solid #eee">
         <el-aside width="250px" style="background-color: rgb(238, 241, 246)">
         <el-menu>
             <p>笔记列表:</p>
@@ -24,11 +24,20 @@
         <el-input
             v-model="menuItems[index].text"
             type="textarea"
-            :rows="20"
+            :rows="15"
             placeholder="请输入内容">
         </el-input>
         <br></br>
         <el-button @click="saveText">保存</el-button>
+        <el-button @click="askLLM">大模型总结</el-button>
+        <br></br>
+        <el-input
+            v-model="summary"
+            type="textarea"
+            :rows="13"
+            placeholder="笔记总结">
+            
+        </el-input>
     </el-main>
   </el-container>
 </el-container>
@@ -55,12 +64,14 @@ export default {
     name: 'HomePage',
     data() {
         return{
+            summary: "",
             userId: 0, 
             index: 0,
             response: null,
             saveRes: null,
             addRes: null,
             delRes: null,
+            llmRes: null,
             menuItems: [
             ],
         }
@@ -74,6 +85,7 @@ export default {
         },
         handleClick: function(x){
             this.index = x;
+            this.summary = '';
         },
         saveText: async function(){
             const pyload = {
@@ -95,6 +107,14 @@ export default {
         logOut: function(){
             this.$router.push('/');
         },
+        askLLM: async function(){
+            this.summary = "正在生成请等待。。。";
+            const pyload = {
+              text: this.menuItems[this.index].text
+            }
+            this.llmRes = await http.post("/llm/ask", pyload);
+            this.summary = this.llmRes.data;
+        }
     },
     created(){
         this.qryData();
