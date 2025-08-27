@@ -17,6 +17,7 @@
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       <el-button @click="addNote">新增</el-button>&nbsp;&nbsp;&nbsp;
       <el-button @click="delNote">删除</el-button>&nbsp;&nbsp;&nbsp;
+      <el-button @click="logOut">退出登录</el-button>&nbsp;&nbsp;&nbsp;
     </el-header>
     
     <el-main>
@@ -26,6 +27,7 @@
             :rows="20"
             placeholder="请输入内容">
         </el-input>
+        <br></br>
         <el-button @click="saveText">保存</el-button>
     </el-main>
   </el-container>
@@ -48,7 +50,6 @@
 
 <script>
 import { http } from '@/services';
-import { del } from 'vue';
 
 export default {
     name: 'HomePage',
@@ -89,7 +90,11 @@ export default {
             const delId = this.menuItems[this.index].id;
             this.delRes = await http.delete("/note/del/" + delId);
             this.qryData();
-        }
+            this.index = 0;
+        },
+        logOut: function(){
+            this.$router.push('/');
+        },
     },
     created(){
         this.qryData();
